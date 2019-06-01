@@ -155,36 +155,9 @@ function update() {
 			// This is proportional to the distance between the planet and 
 			// the debris. The force is weaker the further away the debris.
 			var force = (planet_data.gravity * debris[i].GetMass()) / Math.pow(planet_distance.Length(), 2);
-			if ( planet_distance.Length() < planet_data.radius * 1.5) {
-				counter++;
-				console.log("hit" + counter);
-				if (counter == 4) {
-				// Multiply the magnitude of the force to the directional vector.
-				var linear_velocity = new b2Vec2(0, 0);
-				var pos = debris[i].GetWorldCenter();
-				createDebris(pos, linear_velocity, 10);
-				planet_distance.Multiply(force * 100);
-				console.log("hit!");
-				debris[i].ApplyForce(planet_distance, 
-									 debris[i].GetWorldCenter());
-				// Draw gravitational force on the debris
-				/*ctx.save();
-				ctx.strokeStyle = 'rgba(0,0,255,1)';
-				ctx.lineWidth = 1;
-		
-				ctx.beginPath();
-		
-				ctx.moveTo(b2p(debris_position.x), b2p(debris_position.y));
-				ctx.lineTo(b2p(debris_position.x) + b2p(planet_distance.x), 
-						   b2p(debris_position.y) + b2p(planet_distance.y));
-				ctx.stroke();
-		
-				ctx.fill();
-				ctx.restore();
-				*/
-			}
-			}
-			if ( planet_distance.Length() < planet_data.radius * 2) {
+
+			
+			if ( planet_distance.Length() < planet_data.radius * 5) {
 				
 				// Multiply the magnitude of the force to the directional vector.
 				planet_distance.Multiply(force * 4);
@@ -385,7 +358,7 @@ function CallEvent()
 
 function DebrisSet()
 {
-	for(var i=0; i < 4; i++) {
+	for(var i=0; i <1 ; i++) {
 	var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
 	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 	//console.log(pos);
@@ -394,15 +367,15 @@ function DebrisSet()
 	var linear_velocity = new b2Vec2(0, 0);
 
 	
-	createDebris(pos, linear_velocity, 10);
+	createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 4; i++) {
+	for(var i=0; i < 6000; i++) {
 		if(i < 4) {
-			var pos = new b2Vec2(350 - i * 4 , 200 + 50 - i * 4);
+			var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
 			
 		}
 		else {
-	var pos = new b2Vec2(350 + i * 4 , 200 + 50 + i * 4);
+	var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
 		}
 	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 	//console.log(pos);
@@ -411,6 +384,6 @@ function DebrisSet()
 	var linear_velocity = new b2Vec2(0, 0);
 
 	
-	createDebris(pos, linear_velocity, 2);
+	createDebris(pos, linear_velocity, Math.random());
 	}
 }
