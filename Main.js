@@ -146,7 +146,7 @@ function update() {
 	  //ctx.strokeStyle = "rgba(1, 1, 1, 0)";
 
 	  //ctx.fillStyle = '#7733AA';
-	  ctx.fillStyle = '#FFFFFF';
+	  ctx.fillStyle = randomColor(i) ;
 
 	  ctx.beginPath();
 	  ctx.lineWidth = 0;
@@ -325,7 +325,10 @@ function init(){
 	//setDebugDraw(world);
 	
 	var canvas = document.getElementById('canvas');
-	
+	canvas.width = document.body.clientWidth; //document.width is obsolete
+    canvas.height = document.body.clientHeight; //document.height is obsolete
+    canvasW = canvas.width;
+    canvasH = canvas.height;
 	ctx = canvas.getContext('2d');
 	
 	DebrisSet();
@@ -363,10 +366,10 @@ function init(){
 	}, false);
 	
 	// The reset button.
-	var button = document.getElementById('reset_btn');
-	button.addEventListener('click', 
-							function(e) { reset(); }, 
-							false);
+	// var button = document.getElementById('reset_btn');
+	// button.addEventListener('click', 
+	// 						function(e) { reset(); }, 
+	// 						false);
 	
 	//createPlanets();
 	
@@ -391,7 +394,7 @@ function CallEvent()
 function DebrisSet()
 {
 	for(var i=0; i <1 ; i++) {
-	var pos = new b2Vec2(Math.random() * 200+200, Math.random() * 200+200);
+	var pos = new b2Vec2(Math.random() * 300+200, Math.random() * 200+200);
 	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 	//console.log(pos);
 	
@@ -403,25 +406,39 @@ function DebrisSet()
 	}
 	for(var i=0; i < 600; i++) {
 		
-            var x = Math.random() * 500 + 100;
-            var y = Math.random() * 500;
+            var x = Math.random() * 600 + 300;
+            var y = Math.random() * 500 + 100;
 			var pos = new b2Vec2(x, y);
 			
 		
 	var plusOrMinus = (Math.random() < 0.5 ? -1 : 1) * 30;
 	//console.log(pos);
 	var linear_velocity = new b2Vec2(0, 0);
-    var velocity =3;
-	//var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
-	if(x> 350 && y > 250)
+    var velocity =6;
+	var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
+	if(x> 550 && y > 350)
          linear_velocity = new b2Vec2(0, -velocity);
-    else if(x < 350 && y < 250)
+    else if(x < 550 && y < 350)
          linear_velocity = new b2Vec2(0, velocity);
-	else if(x > 350 && y < 250)
+	else if(x > 550 && y < 350)
          linear_velocity = new b2Vec2(-velocity, 0);
      else
          linear_velocity = new b2Vec2(velocity, 0);
 
-	createDebris(pos, linear_velocity, Math.random()+1);
+	createDebris(pos, linear_velocity, Math.random()*5);
 	}
+}
+
+function getRndColor() {
+    var r = 255*Math.random()|0,
+        g = 255*Math.random()|0,
+        b = 255*Math.random()|0;
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+function randomColor(seed) {
+    var r = Math.sin(seed) * 255;
+	var g = Math.sin(seed*2) * 255;
+	var b = Math.sin(seed*3) * 255;
+	return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
