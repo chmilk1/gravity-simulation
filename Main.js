@@ -55,8 +55,8 @@ function reset() {
  * by v.
  */
 function createDebris(pos, v, r) {
-	var b = newPlanet(p2b(pos.x), p2b(pos.y), p2b(r), r*0.1, 20);
-	//b.SetLinearVelocity(v);
+	var b = newPlanet(p2b(pos.x), p2b(pos.y), p2b(r), r*0.1, 140);
+	b.SetLinearVelocity(v);
 	debris.push(b);
 }
 
@@ -75,9 +75,9 @@ function createDebris(pos, v, r) {
 function newPlanet(x, y, r, g, gf) {
 	var fixDef = new b2FixtureDef;
 	fixDef.density = 1.0;
-	fixDef.friction = 1.0;
+	fixDef.friction = 0.1;
 	fixDef.restitution = 0;
-	fixDef.damping = 0.5;
+	fixDef.damping = 0.1;
 	
 
 	var bodyDef = new b2BodyDef;
@@ -137,7 +137,7 @@ function update() {
 		var debris_position = debris[i].GetWorldCenter();
 		
 		for ( var j = 0; j < debris.length; j++ ) {
-			if(j != i) {
+			if(j != i && debris[i]!= debris[j]) {
 			var planet_position = debris[j].GetWorldCenter();
 			var planet_data = debris[j].GetUserData();
 			// Vector that is used to calculate the distance
@@ -156,11 +156,21 @@ function update() {
 			// the debris. The force is weaker the further away the debris.
 			var force = (planet_data.gravity * debris[i].GetMass()) / Math.pow(planet_distance.Length(), 2);
 
-			
-			if ( planet_distance.Length() < planet_data.radius * 5) {
-				
+			//if ( planet_distance.Length() <= planet_data.radius/2) {
+				//debris[i]= undefined;
+               // debris[i].radius += debris[j].radius;
+               
+             //   world.DestroyBody(debris[j]);
+                
+            //}
+			//else 
+                if ( planet_distance.Length() < planet_data.radius  * planet_data.gravity_factor *.1) {
+				//debris[i]= undefined;
+                //world.DestroyBody(debris[i]);
+                //var force = (planet_data.gravity * debris[i].GetMass()) / Math.pow(planet_distance.Length(), 2);
+
 				// Multiply the magnitude of the force to the directional vector.
-				planet_distance.Multiply(force * 4);
+				planet_distance.Multiply(force);
 
 				debris[i].ApplyForce(planet_distance, 
 									 debris[i].GetWorldCenter());
@@ -233,7 +243,7 @@ function update() {
   	}
 
   	// Draw gravitational field of each planet
-  	for ( var j = 0; j < 3; j++ ) {
+  	for ( var j = 0; j < 0; j++ ) {
   		var ud = debris[j].GetUserData()
   		var radius = b2p(ud.radius) * ud.gravity_factor;
   		var planet_position = debris[j].GetWorldCenter();
@@ -359,31 +369,37 @@ function CallEvent()
 function DebrisSet()
 {
 	for(var i=0; i <1 ; i++) {
-	var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
+	var pos = new b2Vec2(Math.random() * 200+200, Math.random() * 200+200);
 	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
 	//console.log(pos);
 	
-	//var linear_velocity = new b2Vec2(Math.random() * plusOrMinus,Math.random() * plusOrMinus);
-	var linear_velocity = new b2Vec2(0, 0);
+	var linear_velocity = new b2Vec2(Math.random() * plusOrMinus,Math.random() * plusOrMinus);
+	//var linear_velocity = new b2Vec2(0, 0);
 
 	
-	createDebris(pos, linear_velocity, 4);
+	//createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 6000; i++) {
-		if(i < 4) {
-			var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
+	for(var i=0; i < 1000; i++) {
+        
+            var x = Math.random() * 200+200;
+            var y = Math.random() * 200+200
+			var pos = new b2Vec2(x, y);
 			
-		}
-		else {
-	var pos = new b2Vec2(Math.random() * 800, Math.random() * 600);
-		}
-	var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+		
+	var plusOrMinus = (Math.random() < 0.5 ? -1 : 1) * 30;
 	//console.log(pos);
-	
-	//var linear_velocity = new b2Vec2(Math.random() * plusOrMinus,Math.random() * plusOrMinus);
 	var linear_velocity = new b2Vec2(0, 0);
+    var velocity =4;
+	//var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
+	if(x> 300 && y > 300)
+         linear_velocity = new b2Vec2(0, -velocity);
+    else if(x < 300 && y < 300)
+         linear_velocity = new b2Vec2(0, velocity);
+	else if(x > 300 && y < 300)
+         linear_velocity = new b2Vec2(-velocity, 0);
+     else
+         linear_velocity = new b2Vec2(velocity, 0);
 
-	
-	createDebris(pos, linear_velocity, Math.random());
+	createDebris(pos, linear_velocity, Math.random()+0.1);
 	}
 }
