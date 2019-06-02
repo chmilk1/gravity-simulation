@@ -404,7 +404,7 @@ function DebrisSet()
 	
 	//createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 600; i++) {
+	for(var i=0; i < 400; i++) {
 		
             var x = Math.random() * 600 + 300;
             var y = Math.random() * 500 + 100;
