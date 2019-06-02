@@ -131,10 +131,28 @@ function update() {
 	world.ClearForces();
 	var counter = 0;
 	// Draw debug data on the canvas
-	world.DrawDebugData();
-	
+	//world.DrawDebugData();
+	ctx.rect(0, 0, canvas.width, canvas.height);
+	//ctx.fillStyle = getColor(currentcolor);
+	ctx.fill();	
 	for ( var i = 0; i < debris.length; i++ ) {
 		var debris_position = debris[i].GetWorldCenter();
+
+		var ud = debris[i].GetUserData()
+		var radius = b2p(ud.radius);
+	
+	  ctx.save();
+	  //ctx.strokeStyle = 'rgba(0,0,255,1)';
+	  //ctx.strokeStyle = "rgba(1, 1, 1, 0)";
+
+	  //ctx.fillStyle = '#7733AA';
+	  ctx.fillStyle = '#FFFFFF';
+
+	  ctx.beginPath();
+	  ctx.lineWidth = 0;
+	  ctx.arc(b2p(debris_position.x), b2p(debris_position.y), radius, 0, 2 * Math.PI);		
+	  ctx.fill();
+	  ctx.restore();
 		
 		for ( var j = 0; j < debris.length; j++ ) {
 			if(j != i && debris[i]!= debris[j]) {
@@ -160,7 +178,8 @@ function update() {
 				//debris[i]= undefined;
                // debris[i].radius += debris[j].radius;
                
-             //   world.DestroyBody(debris[j]);
+			 //   world.DestroyBody(debris[j]);
+			 
                 
             //}
 			//else 
@@ -220,7 +239,10 @@ function update() {
 			}
 		}
 		
-		
+		// for ( var j = 0; j < debris.length; j++ ) {
+
+
+		// }
 		/*
 		// Draw linear velocity for the debris
 		ctx.save();
@@ -300,7 +322,7 @@ function init(){
 	//
 	// Configure debug draw
 	//
-	setDebugDraw(world);
+	//setDebugDraw(world);
 	
 	var canvas = document.getElementById('canvas');
 	
@@ -379,10 +401,10 @@ function DebrisSet()
 	
 	//createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 500; i++) {
-        
-            var x = Math.random() * 200+200;
-            var y = Math.random() * 200+200
+	for(var i=0; i < 600; i++) {
+		
+            var x = Math.random() * 500 + 100;
+            var y = Math.random() * 500;
 			var pos = new b2Vec2(x, y);
 			
 		
@@ -391,15 +413,15 @@ function DebrisSet()
 	var linear_velocity = new b2Vec2(0, 0);
     var velocity =3;
 	//var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
-	if(x> 300 && y > 300)
+	if(x> 350 && y > 250)
          linear_velocity = new b2Vec2(0, -velocity);
-    else if(x < 300 && y < 300)
+    else if(x < 350 && y < 250)
          linear_velocity = new b2Vec2(0, velocity);
-	else if(x > 300 && y < 300)
+	else if(x > 350 && y < 250)
          linear_velocity = new b2Vec2(-velocity, 0);
      else
          linear_velocity = new b2Vec2(velocity, 0);
 
-	createDebris(pos, linear_velocity, Math.random()+0.1);
+	createDebris(pos, linear_velocity, Math.random()+1);
 	}
 }
