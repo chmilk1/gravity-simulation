@@ -379,7 +379,7 @@ function DebrisSet()
 	
 	//createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 1000; i++) {
+	for(var i=0; i < 500; i++) {
         
             var x = Math.random() * 200+200;
             var y = Math.random() * 200+200
@@ -389,7 +389,7 @@ function DebrisSet()
 	var plusOrMinus = (Math.random() < 0.5 ? -1 : 1) * 30;
 	//console.log(pos);
 	var linear_velocity = new b2Vec2(0, 0);
-    var velocity =4;
+    var velocity =3;
 	//var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
 	if(x> 300 && y > 300)
          linear_velocity = new b2Vec2(0, -velocity);
