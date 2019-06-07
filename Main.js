@@ -54,6 +54,9 @@ function reset() {
  * Create debris at the position pos with linear velocity defined
  * by v.
  */
+
+
+
 function createDebris(pos, v, r) {
 	var b = newPlanet(p2b(pos.x), p2b(pos.y), p2b(r), r*0.1, 140);
 	b.SetLinearVelocity(v);
@@ -404,7 +407,7 @@ function DebrisSet()
 	
 	//createDebris(pos, linear_velocity, 4);
 	}
-	for(var i=0; i < 400; i++) {
+	for(var i=0; i < 700; i++) {
 		
             var x = Math.random() * 600 + 300;
             var y = Math.random() * 500 + 100;
@@ -415,17 +418,17 @@ function DebrisSet()
 	//console.log(pos);
 	var linear_velocity = new b2Vec2(0, 0);
     var velocity =6;
-	var linear_velocity = new b2Vec2(Math.random()  * plusOrMinus,Math.random() * plusOrMinus);
-	if(x> 550 && y > 350)
-         linear_velocity = new b2Vec2(0, -velocity);
-    else if(x < 550 && y < 350)
-         linear_velocity = new b2Vec2(0, velocity);
-	else if(x > 550 && y < 350)
-         linear_velocity = new b2Vec2(-velocity, 0);
-     else
-         linear_velocity = new b2Vec2(velocity, 0);
+	var linear_velocity = new b2Vec2((Math.random()  * plusOrMinus,Math.random() * plusOrMinus)*.15);
+	// if(x> 550 && y > 350)
+    //      linear_velocity = new b2Vec2(0, -velocity);
+    // else if(x < 550 && y < 350)
+    //      linear_velocity = new b2Vec2(0, velocity);
+	// else if(x > 550 && y < 350)
+    //      linear_velocity = new b2Vec2(-velocity, 0);
+    //  else
+    //      linear_velocity = new b2Vec2(velocity, 0);
 
-	createDebris(pos, linear_velocity, Math.random()*5);
+	createDebris(pos, linear_velocity, Math.random()*2);
 	}
 }
 
